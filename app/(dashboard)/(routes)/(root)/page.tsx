@@ -1,6 +1,16 @@
+import { getAllCourses } from "@/actions/get-courses"
 
-export default function Dashboard() {
+export default async function Dashboard() {
+
+  const courses = await getAllCourses();
+
   return (
-    <h1 className="text-center text-2xl">Student Dashboard</h1>
+    <h1 className="w-full">
+      {courses.map((course) => (
+        <div key={course.id}>
+          <h1>{course.name}</h1>
+        </div>
+      ))}
+    </h1>
   )
 }
