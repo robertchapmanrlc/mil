@@ -1,5 +1,6 @@
 
 
+import Navbar from "./components/navbar";
 import SideBar from "./components/side-bar";
 
 export default function DashboardLayout({
@@ -13,8 +14,9 @@ export default function DashboardLayout({
         <SideBar />
       </div>
       <div className="h-[80px] md:pl-80 fixed inset-y-0 w-full z-50">
+        <Navbar />
       </div>
-      <main className="h-full md:pl-80">{children}</main>
+      <main className="h-full md:pl-80 md:pt-20">{children}</main>
     </div>
   );
 }

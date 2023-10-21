@@ -21,12 +21,12 @@ const teacherLinks = [
   {
     icon: List,
     label: "Dashboard",
-    href: "/",
+    href: "/teacher/courses",
   },
   {
     icon: BarChart4,
-    label: "Browse",
-    href: "/search",
+    label: "Analytics",
+    href: "/teacher/analytics",
   },
 ];
 
