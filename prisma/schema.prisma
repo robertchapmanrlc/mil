@@ -16,6 +16,7 @@ model Course {
   userId          String
   name            String
   description     String?
+  price           Float?
   purchases       Purchase[]
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

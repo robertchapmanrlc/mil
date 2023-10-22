@@ -22,6 +22,7 @@ export default async function ({ params }: { params: { courseId: string } }) {
       <p>{params.courseId}</p>
       <p>{course.name}</p>
       <p>{course.description}</p>
+      <p>${course.price}</p>
       <BuyButton courseId={params.courseId} />
     </div>
   );
