@@ -1,11 +1,10 @@
 import { database } from "@/lib/database";
 
-export async function getCourse(userId: string, courseId: string) {
+export async function getCourse(courseId: string) {
   try {
     const course = await database.course.findUnique({
       where: {
-        id: courseId,
-        userId: userId
+        id: courseId
       }
     });
     return course;

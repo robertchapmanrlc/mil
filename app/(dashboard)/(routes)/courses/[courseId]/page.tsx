@@ -1,7 +1,8 @@
+
 import { getCourse } from "@/actions/get-courses";
-import { database } from "@/lib/database";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import BuyButton from "./components/buy-button";
 
 export default async function ({ params }: { params: { courseId: string } }) {
   const { userId } = auth();
@@ -10,7 +11,7 @@ export default async function ({ params }: { params: { courseId: string } }) {
     return redirect("/");
   }
 
-  const course = await getCourse(userId, params.courseId);
+  const course = await getCourse(params.courseId);
 
   if (!course) {
     return redirect("/");
@@ -21,6 +22,7 @@ export default async function ({ params }: { params: { courseId: string } }) {
       <p>{params.courseId}</p>
       <p>{course.name}</p>
       <p>{course.description}</p>
+      <BuyButton courseId={params.courseId} />
     </div>
   );
 }
