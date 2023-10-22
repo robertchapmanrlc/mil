@@ -13,7 +13,8 @@ export async function POST(req: Request) {
 
     const course = await database.course.create({
       data: {
-        name: name
+        name: name,
+        userId: userId
       }
     });
 

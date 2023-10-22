@@ -22,6 +22,7 @@ export default function CreateCoursePage() {
   const onSubmit = async (data: FieldValues) => {
     try {
       const response = await axios.post("/api/courses", data);
+      router.refresh();
       router.push('/');
       toast.success("Course Created");
     } catch (error) {
