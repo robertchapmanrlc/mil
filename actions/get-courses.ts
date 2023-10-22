@@ -1,16 +1,38 @@
 import { database } from "@/lib/database";
+import { Course } from "@prisma/client";
 
 export async function getCourse(courseId: string) {
   try {
     const course = await database.course.findUnique({
       where: {
-        id: courseId
-      }
+        id: courseId,
+      },
     });
     return course;
   } catch (error) {
     console.log("[GET_COURSE]", error);
     return null;
+  }
+}
+
+export async function getPurchasedCourses(userId: string) {
+  try {
+    const purchases = await database.purchase.findMany({
+      where: {
+        userId
+      },
+      include: {
+        course: true
+      }
+    });
+
+    const courses = purchases.map((purchase) => purchase.course) as Course[];
+
+    return courses;
+
+  } catch (error) {
+    console.log("[GET_PURCHASED_COURSE]", error);
+    return [];
   }
 }
 
