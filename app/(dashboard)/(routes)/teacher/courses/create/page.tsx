@@ -1,6 +1,6 @@
 "use client";
 
-import { formSchema, formSchemaType } from "@/lib/types";
+import { createCourseFormSchema, createCourseFormSchemaType } from "@/lib/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -15,8 +15,8 @@ export default function CreateCoursePage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<formSchemaType>({
-    resolver: zodResolver(formSchema),
+  } = useForm<createCourseFormSchemaType>({
+    resolver: zodResolver(createCourseFormSchema),
   });
 
   const onSubmit = async (data: FieldValues) => {
