@@ -13,7 +13,10 @@ export default function SideBarLink({ icon: Icon, label, link }: SideBarLinkProp
   const pathname = usePathname();
   const router = useRouter();
 
-  const isActive = (pathname === '/' && link === '/') || (pathname === link);
+  const isActive =
+    (pathname === '/' && link === '/') ||
+    (pathname === link) ||
+    (pathname.startsWith(`${link}/`));
 
   const onClick = () => {
     router.push(link);
