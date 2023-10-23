@@ -15,7 +15,7 @@ export default async function CoursePage({
     return redirect("/");
   }
 
-  const course = await getCourse(userId, params.courseId);
+  const course = await getCourse(params.courseId);
 
   if (!course) {
     return redirect("/");

@@ -15,9 +15,9 @@ export default function BuyButton({ courseId }: BuyButtonProps) {
 
   const onClick = async () => {
     try {
-      await axios.post(`/api/courses/${courseId}/checkout`);
+      const response = await axios.post(`/api/courses/${courseId}/checkout`);
       toast.success("Course purchased");
-      router.refresh();
+      window.location.assign(response.data.url);
     } catch (error) {
       toast.error("Somethine went wrong");
     }
