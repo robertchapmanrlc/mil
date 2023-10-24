@@ -11,3 +11,11 @@ export const editCourseDescriptionFormSchema = z.object({
 });
 
 export type editCourseDescriptionFormSchemaType = z.infer<typeof editCourseDescriptionFormSchema>;
+
+export const editCourseImageFormSchema = z.object({
+  imageUrl: z
+    .string()
+    .min(1, "Image is required"),
+});
+
+export type editCourseImageFormSchemaType = z.infer<typeof editCourseImageFormSchema>;

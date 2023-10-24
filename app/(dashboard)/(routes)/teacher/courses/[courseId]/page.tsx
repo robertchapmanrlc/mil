@@ -2,6 +2,7 @@ import { getCourse } from "@/actions/get-courses";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import EditCourseForm from "./components/edit-course-form";
+import EditImageForm from "./components/edit-image-form";
 
 
 export default async function CoursePage({
@@ -25,7 +26,8 @@ export default async function CoursePage({
     <div>
       {params.courseId}
       <p>{course.name}</p>
-      <EditCourseForm course={course}/>
+      <EditCourseForm course={course} />
+      <EditImageForm course={course} />
     </div>
   );
 }
