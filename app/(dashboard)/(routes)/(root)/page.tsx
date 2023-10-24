@@ -18,10 +18,10 @@ export default async function Dashboard() {
   return (
     <div className="w-full">
       {courses.map((course) => (
-        <Link href={`/courses/${course.id}`}>
-          <h1 key={course.id}>{course.name}</h1>
+        <Link key={course.id} href={`/courses/${course.id}`}>
+          <h1>{course.name}</h1>
         </Link>
       ))}
     </div>
-  )
+  );
 }

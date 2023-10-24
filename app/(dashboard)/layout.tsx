@@ -16,7 +16,7 @@ export default function DashboardLayout({
       <div className="h-[80px] md:pl-80 fixed inset-y-0 w-full z-50">
         <Navbar />
       </div>
-      <main className="h-full md:pl-80 md:pt-20">{children}</main>
+      <main className="h-full md:pl-80 pt-20">{children}</main>
     </div>
   );
 }
