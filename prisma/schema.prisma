@@ -19,8 +19,18 @@ model Course {
   imageUrl        String?
   price           Float?
   purchases       Purchase[]
+  genreId         String?
+  genre           Genre?    @relation(fields: [genreId], references: [id])
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
+
+  @@index([genreId])
+}
+
+model Genre {
+  id              String    @id @default(uuid())
+  name            String    @unique
+  courses         Course[]
 }
 
 model Purchase {

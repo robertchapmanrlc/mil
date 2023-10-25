@@ -3,6 +3,8 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import EditCourseForm from "./components/edit-course-form";
 import EditImageForm from "./components/edit-image-form";
+import { getGenres } from "@/actions/get-categories";
+import EditGenreForm from "./components/edit-course-genre";
 
 
 export default async function CoursePage({
@@ -22,12 +24,15 @@ export default async function CoursePage({
     return redirect("/");
   }
 
+  const genres = await getGenres();
+
   return (
     <div>
       {params.courseId}
       <p>{course.name}</p>
       <EditCourseForm course={course} />
       <EditImageForm course={course} />
+      <EditGenreForm course={course} genres={genres}/>
     </div>
   );
 }

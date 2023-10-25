@@ -1,11 +1,5 @@
 "use client"
 
-import { useForm, type FieldValues } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  editCourseImageFormSchema,
-  editCourseImageFormSchemaType,
-} from "@/lib/types";
 import { Course } from "@prisma/client";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -20,15 +14,7 @@ type EditCourseFormProps = {
 export default function EditImageForm({ course }: EditCourseFormProps) {
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<editCourseImageFormSchemaType>({
-    resolver: zodResolver(editCourseImageFormSchema),
-  });
-
-  const onSubmit = async (data: FieldValues) => {
+  const onSubmit = async (data: { imageUrl: string }) => {
     try {
       await axios.patch(`/api/courses/${course.id}`, data);
       router.refresh();

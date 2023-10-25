@@ -7,6 +7,9 @@ export async function getCourse(courseId: string) {
       where: {
         id: courseId,
       },
+      include: {
+        genre: true
+      }
     });
     return course;
   } catch (error) {

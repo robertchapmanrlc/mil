@@ -19,3 +19,11 @@ export const editCourseImageFormSchema = z.object({
 });
 
 export type editCourseImageFormSchemaType = z.infer<typeof editCourseImageFormSchema>;
+
+export const editCourseGenreFormSchema = z.object({
+  genreId: z.string().min(1),
+});
+
+export type editCourseGenreFormSchemaType = z.infer<
+  typeof editCourseGenreFormSchema
+>;
