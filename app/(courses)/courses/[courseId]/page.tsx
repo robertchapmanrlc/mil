@@ -18,8 +18,6 @@ export default async function ({ params }: { params: { courseId: string } }) {
     return redirect("/");
   }
 
-  console.log(course);
-
   const purchase = await getCoursePurchase(params.courseId, userId);
 
   if (purchase) {

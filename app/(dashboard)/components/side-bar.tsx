@@ -1,4 +1,4 @@
-import Logo from "./logo";
+import Logo from "@/components/logo";
 import SideBarLinks from "./side-bar-links";
 
 export default function SideBar() {
