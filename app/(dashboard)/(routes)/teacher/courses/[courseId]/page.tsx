@@ -36,11 +36,19 @@ export default async function CoursePage({
       <EditCourseForm course={course} />
       <EditImageForm course={course} />
       <EditGenreForm course={course} genres={genres} />
-      {chapters.map((chapter) => (
-        <Link href={`/teacher/courses/${params.courseId}/chapters/${chapter.id}`}>
-          {chapter.title}
-        </Link>
-      ))}
+      <div className="flex flex-col">
+        {chapters.map((chapter) => (
+          <Link
+            key={chapter.id}
+            href={`/teacher/courses/${params.courseId}/chapters/${chapter.id}`}
+          >
+            {chapter.title}
+          </Link>
+        ))}
+      </div>
+      <Link href={`/teacher/courses/${params.courseId}/chapters/create`}>
+        Add Chapter
+      </Link>
     </div>
   );
 }

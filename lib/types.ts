@@ -26,4 +26,11 @@ export const editCourseGenreFormSchema = z.object({
 
 export type editCourseGenreFormSchemaType = z.infer<
   typeof editCourseGenreFormSchema
->;
+  >;
+
+
+export const createCourseChapterFormSchema = z.object({
+  title: z.string().min(1, "Please add a title"),
+});
+
+export type createCourseChapterFormSchemaType = z.infer<typeof createCourseChapterFormSchema>;
