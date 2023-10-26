@@ -6,6 +6,7 @@ import EditImageForm from "./components/edit-image-form";
 import { getGenres } from "@/actions/get-categories";
 import EditGenreForm from "./components/edit-course-genre";
 import { getCourseChapters } from "@/actions/get-chapters";
+import Link from "next/link";
 
 
 export default async function CoursePage({
@@ -27,7 +28,6 @@ export default async function CoursePage({
 
   const genres = await getGenres();
   const chapters = await getCourseChapters(course.id);
-  console.log(chapters);
 
   return (
     <div>
@@ -37,7 +37,9 @@ export default async function CoursePage({
       <EditImageForm course={course} />
       <EditGenreForm course={course} genres={genres} />
       {chapters.map((chapter) => (
-        <p>{chapter.title}</p>
+        <Link href={`/teacher/courses/${params.courseId}/chapters/${chapter.id}`}>
+          {chapter.title}
+        </Link>
       ))}
     </div>
   );
