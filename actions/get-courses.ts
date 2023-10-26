@@ -8,7 +8,12 @@ export async function getCourse(courseId: string) {
         id: courseId,
       },
       include: {
-        genre: true
+        genre: true,
+        chapters: {
+          orderBy: {
+            createdAt: 'asc'
+          }
+        }
       }
     });
     return course;
