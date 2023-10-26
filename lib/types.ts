@@ -34,3 +34,13 @@ export const createCourseChapterFormSchema = z.object({
 });
 
 export type createCourseChapterFormSchemaType = z.infer<typeof createCourseChapterFormSchema>;
+
+export const editChapterDescriptionFormSchema = z.object({
+  description: z
+    .string()
+    .min(1)
+});
+
+export type editChapterDescriptionFormSchemaType = z.infer<
+  typeof editChapterDescriptionFormSchema
+>;

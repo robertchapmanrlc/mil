@@ -1,6 +1,8 @@
 import { getCourseChapter } from "@/actions/get-chapters";
 import { redirect } from "next/navigation";
 import React from "react";
+import ChapterDescriptionForm from "./components/chapter-description-form";
+
 
 export default async function ChapterPage({
   params,
@@ -16,7 +18,7 @@ export default async function ChapterPage({
   return (
     <div>
       <h1>{chapter.title}</h1>
-      <p>{chapter?.description}</p>
+      <ChapterDescriptionForm chapter={chapter} />
     </div>
   );
 }
