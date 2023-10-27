@@ -6,7 +6,7 @@ import { getCourse } from "@/actions/get-courses";
 import { getGenres } from "@/actions/get-categories";
 import { getCourseChapters } from "@/actions/get-chapters";
 import EditImageForm from "./components/edit-image-form";
-import EditCourseForm from "./components/edit-course-form";
+import EditDescriptionForm from "./components/edit-description-form";
 import EditGenreForm from "./components/edit-course-genre";
 import EditNameForm from "./components/edit-name-form";
 
@@ -35,7 +35,7 @@ export default async function CoursePage({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <EditNameForm course={course} />
-          <EditCourseForm course={course} />
+          <EditDescriptionForm course={course} />
           <EditImageForm course={course} />
           <EditGenreForm course={course} genres={genres} />
         </div>

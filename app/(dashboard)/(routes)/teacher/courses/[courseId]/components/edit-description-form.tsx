@@ -5,48 +5,44 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
 import { Course } from "@prisma/client";
-import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useForm, type FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 
 import {
-  editCourseNameFormSchema,
-  editCourseNameFormSchemaType,
+  editCourseDescriptionFormSchema,
+  editCourseDescriptionFormSchemaType,
 } from "@/lib/types";
+import { Textarea } from "@/components/ui/textarea";
 
-interface EditNameFormProps {
+type EditDescriptionFormProps = {
   course: Course;
-}
+};
 
-export default function EditNameForm({ course }: EditNameFormProps) {
+export default function EditDescriptionForm({
+  course,
+}: EditDescriptionFormProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const router = useRouter();
 
-  const form = useForm<editCourseNameFormSchemaType>({
-    resolver: zodResolver(editCourseNameFormSchema),
+  const form = useForm<editCourseDescriptionFormSchemaType>({
+    resolver: zodResolver(editCourseDescriptionFormSchema),
     defaultValues: {
-      name: course.name || undefined,
+      description: course.description || undefined,
     },
   });
 
   const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async (data: editCourseNameFormSchemaType) => {
+  const onSubmit = async (data: editCourseDescriptionFormSchemaType) => {
     try {
       await axios.patch(`/api/courses/${course.id}`, data);
-      toast.success("Course updated");
-      toggleEdit();
       router.refresh();
+      toggleEdit();
+      toast.success("Course Updated");
     } catch (error) {
       toast.error("Something went wrong");
     }
@@ -54,46 +50,45 @@ export default function EditNameForm({ course }: EditNameFormProps) {
 
   const toggleEdit = () => {
     setIsEditing(!isEditing);
-  }
+  };
 
   return (
-    <div className="border bg-neutral-100 rounded-md p-4">
+    <div className="mt-5 border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Name
+        Course Description
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Name
+              Edit Description
             </>
           )}
         </Button>
       </div>
-      {!isEditing && <p className="text-sm pt-2 cursor-pointer" onClick={toggleEdit}>{course.name}</p>}
+      {!isEditing && <p className="text-sm pt-2">{course.description}</p>}
       {isEditing && (
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="pt-2"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="pt-2 space-y-4">
             <FormField
               control={form.control}
-              name="name"
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
+                    <Textarea
                       disabled={isSubmitting}
-                      placeholder="e.g. Beginner Piano Lessons"
+                      placeholder="e.g. Learn how to play the piano"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
+            <Button type="submit" variant="custom" disabled={isSubmitting || !isValid}>
+              Save
+            </Button>
           </form>
         </Form>
       )}
