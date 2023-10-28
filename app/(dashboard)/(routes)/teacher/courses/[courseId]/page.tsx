@@ -7,7 +7,7 @@ import { getGenres } from "@/actions/get-categories";
 import { getCourseChapters } from "@/actions/get-chapters";
 import EditImageForm from "./components/edit-image-form";
 import EditDescriptionForm from "./components/edit-description-form";
-import EditGenreForm from "./components/edit-course-genre";
+import EditGenreForm from "./components/edit-genre-form";
 import EditNameForm from "./components/edit-name-form";
 
 export default async function CoursePage({
@@ -37,7 +37,13 @@ export default async function CoursePage({
           <EditNameForm course={course} />
           <EditDescriptionForm course={course} />
           <EditImageForm course={course} />
-          <EditGenreForm course={course} genres={genres} />
+          <EditGenreForm
+            course={course}
+            genres={genres.map((genre) => ({
+              label: genre.name,
+              value: genre.id,
+            }))}
+          />
         </div>
         <div className="flex flex-col">
           {chapters.map((chapter) => (

@@ -4,40 +4,47 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
-import { Course } from "@prisma/client";
 import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
+import { Course, Genre } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { useForm, type FieldValues } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
 import {
-  editCourseDescriptionFormSchema,
-  editCourseDescriptionFormSchemaType,
+  editCourseGenreFormSchema,
+  editCourseGenreFormSchemaType,
 } from "@/lib/types";
-import { Textarea } from "@/components/ui/textarea";
+import { Combobox } from "@/components/ui/combo-box";
 
-type EditDescriptionFormProps = {
-  course: Course;
+type EditCourseFormProps = {
+  course: Course & { genre: Genre | null };
+  genres: {
+    label: string;
+    value: string;
+  }[];
 };
 
-export default function EditDescriptionForm({
-  course,
-}: EditDescriptionFormProps) {
+export default function EditGenreForm({ course, genres }: EditCourseFormProps) {
   const [isEditing, setIsEditing] = useState(false);
 
   const router = useRouter();
 
-  const form = useForm<editCourseDescriptionFormSchemaType>({
-    resolver: zodResolver(editCourseDescriptionFormSchema),
-    defaultValues: {
-      description: course.description || undefined,
-    },
+  const form = useForm<editCourseGenreFormSchemaType>({
+    resolver: zodResolver(editCourseGenreFormSchema),
   });
 
   const { isSubmitting, isValid } = form.formState;
 
-  const onSubmit = async (data: editCourseDescriptionFormSchemaType) => {
+  const onSubmit = async (data: editCourseGenreFormSchemaType) => {
     try {
       await axios.patch(`/api/courses/${course.id}`, data);
       router.refresh();
@@ -51,6 +58,8 @@ export default function EditDescriptionForm({
   const toggleEdit = () => {
     setIsEditing(!isEditing);
   };
+
+  const selectedGenre = genres.find((genre) => genre.value === course.genre?.id);
 
   return (
     <div className="mt-5 border bg-neutral-100 rounded-md p-4">
@@ -67,28 +76,27 @@ export default function EditDescriptionForm({
           )}
         </Button>
       </div>
-      {!isEditing && <p className="text-sm pt-2">{course.description || "No description"}</p>}
+      {!isEditing && (
+        <p className="text-sm mt-2">{selectedGenre?.label || "No genre"}</p>
+      )}
       {isEditing && (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="pt-2 space-y-4">
             <FormField
               control={form.control}
-              name="description"
+              name='genreId'
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea
-                      disabled={isSubmitting}
-                      placeholder="e.g. Learn how to play the piano"
+                    <Combobox
+                      options={genres}
                       {...field}
                     />
                   </FormControl>
                 </FormItem>
               )}
             />
-            <Button type="submit" variant="custom" disabled={isSubmitting || !isValid}>
-              Save
-            </Button>
+            <Button type="submit" variant='custom' disabled={isSubmitting || !isValid}>Save</Button>
           </form>
         </Form>
       )}

@@ -1,13 +1,13 @@
-"use client"
+"use client";
 
-import { Course } from "@prisma/client";
-import toast from "react-hot-toast";
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { FileUpload } from "@/components/file-upload";
-import { PlusCircle, ImageIcon } from "lucide-react";
+import toast from "react-hot-toast";
 import { useState } from "react";
+import { Course } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { FileUpload } from "@/components/file-upload";
+import { PlusCircle, ImageIcon, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type EditCourseFormProps = {
@@ -36,14 +36,19 @@ export default function EditImageForm({ course }: EditCourseFormProps) {
   return (
     <div className="mt-5 border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Description
+        Course Image
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
             <>Cancel</>
-          ) : (
+          ) : !course.imageUrl ? (
             <>
               <PlusCircle className="h-4 w-4 mr-2" />
-              Edit Description
+              Add an Image
+            </>
+          ) : (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Edit Image
             </>
           )}
         </Button>
