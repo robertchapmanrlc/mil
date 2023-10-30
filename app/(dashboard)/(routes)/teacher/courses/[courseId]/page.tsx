@@ -10,6 +10,7 @@ import EditDescriptionForm from "./components/edit-description-form";
 import EditGenreForm from "./components/edit-genre-form";
 import EditNameForm from "./components/edit-name-form";
 import EditPriceForm from "./components/edit-price-form";
+import EditChaptersForm from "./components/edit-chapters-form";
 
 export default async function CoursePage({
   params,
@@ -29,7 +30,6 @@ export default async function CoursePage({
   }
 
   const genres = await getGenres();
-  const chapters = await getCourseChapters(course.id);
 
   return (
     <div className="p-6">
@@ -47,18 +47,8 @@ export default async function CoursePage({
           />
         </div>
         <div>
-          <div className="flex flex-col">
-            {chapters.map((chapter) => (
-              <Link
-                key={chapter.id}
-                href={`/teacher/courses/${params.courseId}/chapters/${chapter.id}`}
-              >
-                {chapter.title}
-              </Link>
-            ))}
-            <Link href={`/teacher/courses/${params.courseId}/chapters/create`}>
-              Add Chapter
-            </Link>
+          <div>
+            <EditChaptersForm course={course} />
           </div>
           <div>
             <EditPriceForm course={course} />

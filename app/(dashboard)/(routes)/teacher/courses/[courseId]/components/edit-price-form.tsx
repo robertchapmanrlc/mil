@@ -57,7 +57,7 @@ export default function EditPriceForm({ course }: EditPriceFormProps) {
   };
 
   return (
-    <div className="border bg-neutral-100 rounded-md p-4">
+    <div className="border bg-neutral-100 rounded-md p-4 mt-5">
       <div className="font-medium flex items-center justify-between">
         Course Price
         <Button variant="ghost" onClick={toggleEdit}>
