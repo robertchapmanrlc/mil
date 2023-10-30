@@ -15,14 +15,13 @@ interface EditChaptersFormProps {
 }
 
 export default function EditChaptersForm({ course }: EditChaptersFormProps) {
-
   return (
     <div className="border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
         Chapters
         <Button variant="ghost">
-          <PlusCircle className="h-4 w-4 mr-2" />
-          <Link href={`/teacher/courses/${course.id}/chapters/create`}>
+          <Link href={`/teacher/courses/${course.id}/chapters/create`} className="flex items-center">
+            <PlusCircle className="h-4 w-4 mr-2" />
             Add Chapter
           </Link>
         </Button>
