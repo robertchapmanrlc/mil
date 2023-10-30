@@ -9,6 +9,7 @@ import EditImageForm from "./components/edit-image-form";
 import EditDescriptionForm from "./components/edit-description-form";
 import EditGenreForm from "./components/edit-genre-form";
 import EditNameForm from "./components/edit-name-form";
+import EditPriceForm from "./components/edit-price-form";
 
 export default async function CoursePage({
   params,
@@ -45,18 +46,23 @@ export default async function CoursePage({
             }))}
           />
         </div>
-        <div className="flex flex-col">
-          {chapters.map((chapter) => (
-            <Link
-              key={chapter.id}
-              href={`/teacher/courses/${params.courseId}/chapters/${chapter.id}`}
-            >
-              {chapter.title}
+        <div>
+          <div className="flex flex-col">
+            {chapters.map((chapter) => (
+              <Link
+                key={chapter.id}
+                href={`/teacher/courses/${params.courseId}/chapters/${chapter.id}`}
+              >
+                {chapter.title}
+              </Link>
+            ))}
+            <Link href={`/teacher/courses/${params.courseId}/chapters/create`}>
+              Add Chapter
             </Link>
-          ))}
-          <Link href={`/teacher/courses/${params.courseId}/chapters/create`}>
-            Add Chapter
-          </Link>
+          </div>
+          <div>
+            <EditPriceForm course={course} />
+          </div>
         </div>
       </div>
     </div>

@@ -44,6 +44,14 @@ export const createCourseChapterFormSchema = z.object({
   title: z.string().min(1, "Please add a title"),
 });
 
+export const editCoursePriceFormSchema = z.object({
+  price: z.coerce.number()
+});
+
+export type editCoursePriceFormSchemaType = z.infer<
+  typeof editCoursePriceFormSchema
+>;
+
 export type createCourseChapterFormSchemaType = z.infer<
   typeof createCourseChapterFormSchema
 >;
