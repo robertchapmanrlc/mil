@@ -1,9 +1,10 @@
-import { getCourseChapter } from "@/actions/get-chapters";
 import { redirect } from "next/navigation";
-import React from "react";
-import ChapterDescriptionForm from "./components/chapter-description-form";
-import ChapterNameForm from "./components/chapter-name-form";
 
+import { getCourseChapter } from "@/actions/get-chapters";
+import ChapterNameForm from "./components/chapter-name-form";
+import ChapterDescriptionForm from "./components/chapter-description-form";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default async function ChapterPage({
   params,
@@ -18,11 +19,13 @@ export default async function ChapterPage({
 
   return (
     <div className="p-6">
-      <div className="grid grid-cols-1 md:grid-cols-2">
-        <div>
-          <ChapterNameForm chapter={chapter} />
-          <ChapterDescriptionForm chapter={chapter} />
-        </div>
+      <Link href={`/teacher/courses/${chapter.courseId}`} className="flex gap-2 mb-8">
+        <ArrowLeft />
+        Go back to course page
+      </Link>
+      <div className="flex flex-col">
+        <ChapterNameForm chapter={chapter} />
+        <ChapterDescriptionForm chapter={chapter} />
       </div>
     </div>
   );

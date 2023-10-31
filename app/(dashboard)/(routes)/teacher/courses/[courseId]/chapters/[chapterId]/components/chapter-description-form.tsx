@@ -4,11 +4,16 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
-import { Chapter, Course } from "@prisma/client";
-import { useRouter } from "next/navigation";
+import { Chapter } from "@prisma/client";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem
+} from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 
 import {
