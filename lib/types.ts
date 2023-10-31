@@ -40,20 +40,28 @@ export type editCourseGenreFormSchemaType = z.infer<
   typeof editCourseGenreFormSchema
 >;
 
-export const createCourseChapterFormSchema = z.object({
-  title: z.string().min(1, "Please add a title"),
-});
-
 export const editCoursePriceFormSchema = z.object({
-  price: z.coerce.number()
+  price: z.coerce.number(),
 });
 
 export type editCoursePriceFormSchemaType = z.infer<
   typeof editCoursePriceFormSchema
 >;
 
+export const createCourseChapterFormSchema = z.object({
+  title: z.string().min(1, "Please add a title"),
+});
+
 export type createCourseChapterFormSchemaType = z.infer<
   typeof createCourseChapterFormSchema
+>;
+
+export const editChapterNameFormSchema = z.object({
+  title: z.string().min(1, "Name must be at least one character in length"),
+});
+
+export type editChapterNameFormSchemaType = z.infer<
+  typeof editChapterNameFormSchema
 >;
 
 export const editChapterDescriptionFormSchema = z.object({
