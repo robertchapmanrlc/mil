@@ -1,58 +1,106 @@
 "use client";
 
-import { useForm, type FieldValues } from "react-hook-form";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import { Pencil } from "lucide-react";
+import { Chapter, Course } from "@prisma/client";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
+import { Button } from "@/components/ui/button";
+
 import {
   editChapterDescriptionFormSchema,
   editChapterDescriptionFormSchemaType,
 } from "@/lib/types";
-import { Chapter } from "@prisma/client";
-import toast from "react-hot-toast";
-import axios from "axios";
-import { useRouter } from "next/navigation";
+import { Textarea } from "@/components/ui/textarea";
 
 type ChapterDescriptionFormProps = {
   chapter: Chapter;
 };
 
-export default function ChapterDescriptionForm(
-  { chapter }: ChapterDescriptionFormProps,
-) {
+export default function ChapterDescriptionForm({
+  chapter,
+}: ChapterDescriptionFormProps) {
+  const [isEditing, setIsEditing] = useState(false);
+
   const router = useRouter();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<editChapterDescriptionFormSchemaType>({
+  const form = useForm<editChapterDescriptionFormSchemaType>({
     resolver: zodResolver(editChapterDescriptionFormSchema),
+    defaultValues: {
+      description: chapter.description || undefined,
+    },
   });
 
-  const onSubmit = async (data: FieldValues) => {
+  const { isSubmitting, isValid } = form.formState;
+
+  const onSubmit = async (data: editChapterDescriptionFormSchemaType) => {
     try {
-      const response = await axios.patch(
-        `/api/courses/${chapter.courseId}/chapters/${chapter.id}`,
-        data
-      );
+      await axios.patch(`/api/courses/${chapter.courseId}/chapters/${chapter.id}`, data);
       router.refresh();
+      toggleEdit();
       toast.success("Chapter Updated");
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col">
-      <input
-        {...register("description")}
-        type="text"
-        placeholder={
-          !chapter?.description ? "No description" : chapter?.description
-        }
-      />
-      {errors.description && <p>{errors.description.message}</p>}
+  const toggleEdit = () => {
+    setIsEditing(!isEditing);
+  };
 
-      <button type="submit">Save</button>
-    </form>
+  return (
+    <div className="mt-5 border bg-neutral-100 rounded-md p-4">
+      <div className="font-medium flex items-center justify-between">
+        Chapter Description
+        <Button variant="ghost" onClick={toggleEdit}>
+          {isEditing ? (
+            <>Cancel</>
+          ) : (
+            <>
+              <Pencil className="h-4 w-4 mr-2" />
+              Edit Description
+            </>
+          )}
+        </Button>
+      </div>
+      {!isEditing && (
+        <p className="text-sm pt-2">{chapter.description || "No description"}</p>
+      )}
+      {isEditing && (
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="pt-2 space-y-4"
+          >
+            <FormField
+              control={form.control}
+              name="description"
+              render={({ field }) => (
+                <FormItem>
+                  <FormControl>
+                    <Textarea
+                      disabled={isSubmitting}
+                      placeholder="e.g. Play the keys from C4 to C5 to play the C major scale"
+                      {...field}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <Button
+              type="submit"
+              variant="custom"
+              disabled={isSubmitting || !isValid}
+            >
+              Save
+            </Button>
+          </form>
+        </Form>
+      )}
+    </div>
   );
 }
