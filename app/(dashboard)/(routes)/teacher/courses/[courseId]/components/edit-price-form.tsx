@@ -73,21 +73,24 @@ export default function EditPriceForm({ course }: EditPriceFormProps) {
       </div>
       {!isEditing && (
         <p className="text-sm pt-2 cursor-pointer">
-          ${course.price}
+          {!course.price ? "No price" : <>${course.price}</>}
         </p>
       )}
       {isEditing && (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="pt-2 space-y-4">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="pt-2 space-y-4"
+          >
             <FormField
               control={form.control}
-              name='price'
+              name="price"
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
                     <Input
-                      type='number'
-                      step='0.01'
+                      type="number"
+                      step="0.01"
                       disabled={isSubmitting}
                       {...field}
                     />
@@ -96,7 +99,13 @@ export default function EditPriceForm({ course }: EditPriceFormProps) {
                 </FormItem>
               )}
             />
-            <Button type='submit' variant='custom' disabled={isSubmitting || !isValid}>Save</Button>
+            <Button
+              type="submit"
+              variant="custom"
+              disabled={isSubmitting || !isValid}
+            >
+              Save
+            </Button>
           </form>
         </Form>
       )}

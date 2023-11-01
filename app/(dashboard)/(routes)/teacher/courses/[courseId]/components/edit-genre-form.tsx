@@ -64,14 +64,14 @@ export default function EditGenreForm({ course, genres }: EditCourseFormProps) {
   return (
     <div className="mt-5 border bg-neutral-100 rounded-md p-4">
       <div className="font-medium flex items-center justify-between">
-        Course Description
+        Course Genre
         <Button variant="ghost" onClick={toggleEdit}>
           {isEditing ? (
             <>Cancel</>
           ) : (
             <>
               <Pencil className="h-4 w-4 mr-2" />
-              Edit Description
+              Edit Genre
             </>
           )}
         </Button>
