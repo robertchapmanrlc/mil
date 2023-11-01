@@ -2,6 +2,52 @@ import { database } from "@/lib/database";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 
+export async function DELETE(
+  req: Request,
+  { params }: { params: { courseId: string; chapterId: string } }
+) {
+  try {
+    const { userId } = auth();
+    if (!userId) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const course = await database.course.findUnique({
+      where: {
+        id: params.courseId,
+        userId: userId,
+      },
+    });
+
+    if (!course) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const chapter = await database.chapter.findUnique({
+      where: {
+        id: params.chapterId,
+        courseId: params.courseId,
+      },
+    });
+
+    if (!chapter) {
+      return new NextResponse("Unauthorized", { status: 401 });
+    }
+
+    const deletedChapter = await database.chapter.delete({
+      where: {
+        id: params.chapterId,
+        courseId: params.courseId,
+      },
+    });
+
+    return NextResponse.json(deletedChapter);
+  } catch (error) {
+    console.log("CHAPTER_ID_DELETE", error);
+    return new NextResponse("Internal error", { status: 500 });
+  }
+}
+
 export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string; chapterId: string } }
@@ -49,7 +95,7 @@ export async function PATCH(
     return NextResponse.json(updatedChapter);
 
   } catch (error) {
-    console.log("CHAPTER_ID", error);
+    console.log("CHAPTER_ID_PATCH", error);
     return new NextResponse("Internal error", { status: 500 });
   }
 }
