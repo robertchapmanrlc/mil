@@ -46,7 +46,11 @@ export async function getPurchasedCourses(userId: string) {
 
 export async function getAllCourses() {
   try {
-    const courses = await database.course.findMany();
+    const courses = await database.course.findMany({
+      where: {
+        isPublished: true
+      }
+    });
     return courses;
   } catch (error) {
     console.log("[GET_ALL_COURSES]", error);
