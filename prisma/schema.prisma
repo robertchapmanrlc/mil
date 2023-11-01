@@ -18,6 +18,7 @@ model Course {
   description     String?
   imageUrl        String?
   price           Float?
+  isPublished     Boolean  @default(false)
   chapters        Chapter[]
   purchases       Purchase[]
   genreId         String?
