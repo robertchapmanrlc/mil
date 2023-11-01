@@ -39,14 +39,17 @@ export default function EditChaptersForm({ course }: EditChaptersFormProps) {
               href={`/teacher/courses/${course.id}/chapters/${chapter.id}`}
             >
               <p className="text-sm">{chapter.title}</p>
-              <Badge
-                className={cn(
-                  "bg-neutral-500",
-                  chapter.isPublished && "bg-green-700"
-                )}
-              >
-                {chapter.isPublished ? "Published" : "Draft"}
-              </Badge>
+              <div className="flex gap-x-2">
+                {chapter.isFree && <Badge variant='secondary'>Free</Badge>}
+                <Badge
+                  className={cn(
+                    "bg-neutral-500",
+                    chapter.isPublished && "bg-green-700"
+                  )}
+                >
+                  {chapter.isPublished ? "Published" : "Draft"}
+                </Badge>
+              </div>
             </Link>
           </div>
         ))}

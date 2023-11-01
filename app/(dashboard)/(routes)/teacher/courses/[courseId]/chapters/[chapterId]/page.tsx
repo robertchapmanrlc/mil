@@ -7,6 +7,7 @@ import ChapterActions from "./components/chapter-actions";
 import ChapterNameForm from "./components/chapter-name-form";
 import ChapterDescriptionForm from "./components/chapter-description-form";
 import { getCourseChapter } from "@/actions/get-chapters";
+import ChapterFreeForm from "./components/chapter-free-form";
 
 export default async function ChapterPage({
   params,
@@ -60,9 +61,14 @@ export default async function ChapterPage({
             </div>
           </div>
         </div>
-        <div className="flex flex-col mt-4">
-          <ChapterNameForm chapter={chapter} />
-          <ChapterDescriptionForm chapter={chapter} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+          <div>
+            <ChapterNameForm chapter={chapter} />
+            <ChapterDescriptionForm chapter={chapter} />
+          </div>
+          <div>
+            <ChapterFreeForm chapter={chapter}/>
+          </div>
         </div>
       </div>
     </>

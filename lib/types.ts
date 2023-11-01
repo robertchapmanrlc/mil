@@ -70,4 +70,12 @@ export const editChapterDescriptionFormSchema = z.object({
 
 export type editChapterDescriptionFormSchemaType = z.infer<
   typeof editChapterDescriptionFormSchema
+  >;
+
+export const editChapterAccessFormSchema = z.object({
+  isFree: z.boolean().default(false),
+});
+
+export type editChapterAccessFormSchemaType = z.infer<
+  typeof editChapterAccessFormSchema
 >;
