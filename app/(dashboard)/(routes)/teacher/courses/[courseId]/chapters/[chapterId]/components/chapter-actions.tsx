@@ -1,24 +1,26 @@
 "use client";
 
+import axios from "axios";
+import toast from "react-hot-toast";
+import { Trash } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
-import toast from "react-hot-toast";
-import axios from "axios";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
-import { Trash } from "lucide-react";
 
 interface ChapterActionsProps {
   courseId: string;
   chapterId: string;
   isPublished: boolean;
+  disabled: boolean;
 }
 
 export default function ChapterActions({
   courseId,
   chapterId,
   isPublished,
+  disabled
 }: ChapterActionsProps) {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -63,7 +65,7 @@ export default function ChapterActions({
 
   return (
     <div className="flex gap-x-4">
-      <Button variant="custom" onClick={onClick}>
+      <Button variant="custom" onClick={onClick} disabled={disabled || isLoading}>
         {!isPublished ? "Publish" : "Unpublish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
