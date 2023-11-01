@@ -40,7 +40,8 @@ model Chapter {
   description     String?   @db.Text
   courseId        String
   course          Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
-
+  isPublished     Boolean   @default(false)
+  isFree          Boolean   @default(false)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
 

@@ -4,7 +4,8 @@ export async function getCourseChapters(courseId: string) {
   try {
     const chapters = await database.chapter.findMany({
       where: {
-        courseId: courseId
+        courseId: courseId,
+        isPublished: true
       }
     });
     return chapters;
