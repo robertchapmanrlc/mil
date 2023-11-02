@@ -2,6 +2,7 @@ import { getAnalytics } from "@/actions/get-analytics";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import DataCard from "./components/data-card";
+import { Chart } from "./components/chart";
 
 
 export default async function TeacherAnalytics() {
@@ -26,6 +27,7 @@ export default async function TeacherAnalytics() {
           value={totalRevenue}
         />
       </div>
+      <Chart data={data} />
     </div>
   );
 }
