@@ -1,5 +1,10 @@
 import { database } from "@/lib/database";
-import { Course } from "@prisma/client";
+import { Chapter, Course, Genre } from "@prisma/client";
+
+type CourseWithGenre = Course & {
+  genre: Genre;
+  chapters: Chapter[];
+}
 
 export async function getCourse(courseId: string) {
   try {
@@ -10,6 +15,9 @@ export async function getCourse(courseId: string) {
       include: {
         genre: true,
         chapters: {
+          where: {
+            isPublished: true
+          },
           orderBy: {
             createdAt: 'asc'
           }
@@ -30,11 +38,23 @@ export async function getPurchasedCourses(userId: string) {
         userId
       },
       include: {
-        course: true
+        course: {
+          include: {
+            genre: true,
+            chapters: {
+              where: {
+                isPublished: true
+              },
+              orderBy: {
+                createdAt: 'asc'
+              }
+            }
+          }
+        }
       }
     });
 
-    const courses = purchases.map((purchase) => purchase.course) as Course[];
+    const courses = purchases.map((purchase) => purchase.course) as CourseWithGenre[];
 
     return courses;
 
@@ -49,9 +69,20 @@ export async function getAllCourses() {
     const courses = await database.course.findMany({
       where: {
         isPublished: true
+      },
+      include: {
+        genre: true,
+        chapters: {
+          where: {
+            isPublished: true
+          },
+          orderBy: {
+            createdAt: 'asc'
+          }
+        }
       }
     });
-    return courses;
+    return courses as CourseWithGenre[];
   } catch (error) {
     console.log("[GET_ALL_COURSES]", error);
     return [];
