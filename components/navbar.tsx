@@ -1,6 +1,6 @@
 import { UserButton } from "@clerk/nextjs";
 import SearchInput from "../app/(dashboard)/components/search-input";
-import TeacherModeButton from "../app/(dashboard)/components/teacher-mode-button";
+import TeacherModeButton from "./teacher-mode-button";
 import MobileSidebar from "../app/(dashboard)/components/mobile-sidebar";
 
 export default function Navbar() {
