@@ -6,6 +6,28 @@ type CourseWithGenre = Course & {
   chapters: Chapter[];
 }
 
+export async function getCourseForEditing(courseId: string) {
+  try {
+    const course = await database.course.findUnique({
+      where: {
+        id: courseId,
+      },
+      include: {
+        genre: true,
+        chapters: {
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+      },
+    });
+    return course;
+  } catch (error) {
+    console.log("[GET_COURSE]", error);
+    return null;
+  }
+}
+
 export async function getCourse(courseId: string) {
   try {
     const course = await database.course.findUnique({

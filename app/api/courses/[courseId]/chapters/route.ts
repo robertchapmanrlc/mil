@@ -23,10 +23,22 @@ export async function POST(req: Request, { params } : { params: { courseId : str
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
+    const lastChapter = await database.chapter.findFirst({
+      where: {
+        courseId: params.courseId
+      },
+      orderBy: {
+        createdAt: 'desc'
+      }
+    });
+
+    const newPosition = lastChapter ? lastChapter.position + 1 : 1;
+
     const chapter = await database.chapter.create({
       data: {
         title,
-        courseId: params.courseId
+        courseId: params.courseId,
+        position: newPosition
       }
     });
 

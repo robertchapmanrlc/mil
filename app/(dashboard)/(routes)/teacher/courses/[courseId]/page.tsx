@@ -2,9 +2,8 @@ import Link from "next/link";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-import { getCourse } from "@/actions/get-courses";
+import { getCourseForEditing } from "@/actions/get-courses";
 import { getGenres } from "@/actions/get-categories";
-import { getCourseChapters } from "@/actions/get-chapters";
 import EditImageForm from "./components/edit-image-form";
 import EditDescriptionForm from "./components/edit-description-form";
 import EditGenreForm from "./components/edit-genre-form";
@@ -25,7 +24,7 @@ export default async function CoursePage({
     return redirect("/");
   }
 
-  const course = await getCourse(params.courseId);
+  const course = await getCourseForEditing(params.courseId);
 
   if (!course) {
     return redirect("/");
