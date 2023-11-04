@@ -1,9 +1,11 @@
 import { database } from "@/lib/database";
 import { Chapter, Course, Genre } from "@prisma/client";
+import { getChapterProgress, getCourseProgress } from "./get-progress";
 
-type CourseWithGenre = Course & {
+type CourseWithGenreWithProgress = Course & {
   genre: Genre;
   chapters: Chapter[];
+  progress: number | null;
 }
 
 export async function getCourseForEditing(courseId: string) {
@@ -76,7 +78,12 @@ export async function getPurchasedCourses(userId: string) {
       }
     });
 
-    const courses = purchases.map((purchase) => purchase.course) as CourseWithGenre[];
+    const courses = purchases.map((purchase) => purchase.course) as CourseWithGenreWithProgress[];
+
+    for (let course of courses) {
+      const progress = await getCourseProgress(course.id, userId);
+      course['progress'] = progress;
+    }
 
     return courses;
 
@@ -104,7 +111,7 @@ export async function getAllCourses() {
         }
       }
     });
-    return courses as CourseWithGenre[];
+    return courses as CourseWithGenreWithProgress[];
   } catch (error) {
     console.log("[GET_ALL_COURSES]", error);
     return [];

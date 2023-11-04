@@ -4,6 +4,7 @@ import CourseCard from "./course-card";
 type CourseWithGenre = Course & {
   genre: Genre;
   chapters: { id: string }[];
+  progress: number | null;
 };
 
 interface CoursesListProps {
@@ -16,6 +17,7 @@ export default function CoursesList({ items }: CoursesListProps) {
       <div className="grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-4">
         {items.map((item) => (
           <CourseCard
+            progress={item.progress}
             key={item.id}
             id={item.id}
             name={item.name}
