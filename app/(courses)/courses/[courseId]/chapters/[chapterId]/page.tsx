@@ -6,6 +6,8 @@ import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import EnrollButton from "./components/enroll-button";
 import { cn } from "@/lib/utils";
+import CompleteButton from "./components/complete-button";
+import { getChapterProgress } from "@/actions/get-progress";
 
 export default async function CourseChapterPage({
   params,
@@ -32,13 +34,15 @@ export default async function CourseChapterPage({
 
   const purchase = await getCoursePurchase(params.courseId, userId);
 
+  const studentProgress = await getChapterProgress(params.chapterId, userId);
+
   const isLocked = !chapter.isFree && !purchase;
 
   return (
     <div className="p-4">
       <div className="flex flex-row justify-between items-center mb-2">
         <h1 className="text-2xl font-semibold">{chapter.title}</h1>
-        {isLocked && <EnrollButton price={course.price!} courseId={course.id} />}
+        {isLocked ? <EnrollButton price={course.price!} courseId={course.id} /> : <CompleteButton courseId={chapter.courseId} chapterId={chapter.id} isCompleted={!!studentProgress?.isCompleted} />}
       </div>
       <Separator />
       <div className={cn(
