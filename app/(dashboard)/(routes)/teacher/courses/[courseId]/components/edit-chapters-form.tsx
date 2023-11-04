@@ -33,7 +33,7 @@ export default function EditChaptersForm({ course }: EditChaptersFormProps) {
       </div>
       <div className="flex flex-col gap-2">
         {course.chapters.map((chapter) => (
-          <div className="bg-neutral-200 p-2 rounded-md hover:bg-neutral-300">
+          <div key={chapter.id} className="bg-neutral-200 p-2 rounded-md hover:bg-neutral-300">
             <Link
               className="flex justify-between"
               href={`/teacher/courses/${course.id}/chapters/${chapter.id}`}

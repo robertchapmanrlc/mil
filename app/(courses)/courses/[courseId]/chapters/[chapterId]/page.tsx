@@ -1,8 +1,11 @@
 import { getCourseChapter } from "@/actions/get-chapters";
 import { getCourse } from "@/actions/get-courses";
+import { getCoursePurchase } from "@/actions/get-purchases";
 import { Separator } from "@/components/ui/separator";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import EnrollButton from "./components/enroll-button";
+import { cn } from "@/lib/utils";
 
 export default async function CourseChapterPage({
   params,
@@ -27,11 +30,22 @@ export default async function CourseChapterPage({
     return redirect("/");
   }
 
+  const purchase = await getCoursePurchase(params.courseId, userId);
+
+  const isLocked = !chapter.isFree && !purchase;
+
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-semibold mb-2">{chapter.title}</h1>
+      <div className="flex flex-row justify-between items-center mb-2">
+        <h1 className="text-2xl font-semibold">{chapter.title}</h1>
+        {isLocked && <EnrollButton price={course.price!} courseId={course.id} />}
+      </div>
       <Separator />
-      <p className="mt-2">{chapter.description}</p>
+      <div className={cn(
+        isLocked && "blur-sm"
+      )}>
+        <p className="mt-2">{chapter.description}</p>
+      </div>
     </div>
   );
 }

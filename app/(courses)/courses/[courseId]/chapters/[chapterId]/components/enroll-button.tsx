@@ -1,15 +1,18 @@
 
 "use client"
 
+import { Button } from "@/components/ui/button";
+import { formatPrice } from "@/lib/format";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-type BuyButtonProps = {
+type EnrollButtonProps = {
+  price: number;
   courseId: string;
 };
 
-export default function BuyButton({ courseId }: BuyButtonProps) {
+export default function EnrollButton({ price, courseId }: EnrollButtonProps) {
 
   const router = useRouter();
 
@@ -23,5 +26,5 @@ export default function BuyButton({ courseId }: BuyButtonProps) {
     }
   };
 
-  return <button onClick={onClick}>Buy</button>;
+  return <Button variant='custom' onClick={onClick}>Enroll for {formatPrice(price)}</Button>;
 }
