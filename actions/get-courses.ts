@@ -78,7 +78,8 @@ export async function getPurchasedCourses(userId: string) {
       }
     });
 
-    const courses = purchases.map((purchase) => purchase.course) as CourseWithGenreWithProgress[];
+    let courses = purchases.map((purchase) => purchase.course) as CourseWithGenreWithProgress[];
+    courses = courses.filter((course) => course.isPublished);
 
     for (let course of courses) {
       const progress = await getCourseProgress(course.id, userId);

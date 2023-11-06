@@ -41,6 +41,23 @@ export async function DELETE(
       },
     });
 
+    const remainingChapters = await database.chapter.findMany({
+      where: {
+        courseId: params.courseId
+      }
+    });
+
+    if (remainingChapters.length === 0) {
+      const updatedCourse = await database.course.update({
+        where: {
+          id: params.courseId
+        },
+        data: {
+          isPublished: false
+        }
+      });
+    }
+
     return NextResponse.json(deletedChapter);
   } catch (error) {
     console.log("CHAPTER_ID_DELETE", error);
