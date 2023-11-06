@@ -41,8 +41,6 @@ export default function CompleteButton({
     }
   };
 
-  console.log("Iscomplete", isCompleted);
-
   return (
     <Button
       onClick={onClick}

@@ -1,6 +1,6 @@
 
 import Logo from "@/components/logo";
-import { Chapter, Course } from "@prisma/client";
+import { Chapter } from "@prisma/client";
 import CourseSideBarLink from "./course-side-bar-item";
 import { getCoursePurchase } from "@/actions/get-purchases";
 import { auth } from "@clerk/nextjs";
