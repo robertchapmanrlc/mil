@@ -40,7 +40,7 @@ export default async function CourseChapterPage({
 
   return (
     <div className="p-4">
-      <div className="flex flex-row justify-between items-center mb-2">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 sm:mb-2 gap-y-2">
         <h1 className="text-2xl font-semibold">{chapter.title}</h1>
         {isLocked ? <EnrollButton price={course.price!} courseId={course.id} /> : <CompleteButton courseId={chapter.courseId} chapterId={chapter.id} isCompleted={!!studentProgress?.isCompleted} />}
       </div>

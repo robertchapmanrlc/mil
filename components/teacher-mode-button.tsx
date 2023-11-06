@@ -18,7 +18,7 @@ export default function TeacherModeButton() {
 
   return (
     <button onClick={onClick}>
-      {!inTeacherMode ? "Teacher mode" : "Student Mode"}
+      <p className="text-sm sm:text-base">{!inTeacherMode ? "Teacher mode" : "Student Mode"}</p>
     </button>
   );
 }
